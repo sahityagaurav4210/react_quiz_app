@@ -35,7 +35,7 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
             </div>
 
             <div className="footer d-flex align-items-center justify-content-end px-4 mb-4">
-                <button type="submit" className="fw-bold mb-4 p-1">Next Question</button>
+                <button type="submit" className="fw-bold mb-4 p-1" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
             </div>
         </div>
     </> : <>
@@ -60,7 +60,7 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
                     </div>
 
                     <div className="footer d-flex align-items-center justify-content-end px-4 mb-4">
-                        <button type="submit" className="fw-bold mb-4 p-1">Next Question</button>
+                        <button type="submit" className="fw-bold mb-4 p-1" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
                     </div>
                 </div>
             </> :
