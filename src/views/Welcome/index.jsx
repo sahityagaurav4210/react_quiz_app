@@ -1,67 +1,75 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { load } from './index.js';
-import { Constants } from '../../config';
 
 import Question from '../Question/index.jsx';
 
-import './index.css';
+const Welcome = () => {
+  const [formDetails, setFormDetails] = useState({ amount: 10, category: 'sports', difficulty: 'easy' });
+  const [loading, setLoading] = useState(false);
+  const [questions, setQuestions] = useState();
+  const [view, setView] = useState('Welcome');
 
-let $CONST = new Constants();
+  return (
+    view === 'Welcome' ?
+      <>
+        <div id="quiz">
+          <Form onSubmit={(event) => {
+            event.preventDefault();
+          }}>
+            <div className="mt-4 mb-4 px-5">
+              <h1 className="fw-bold h-primary">Setup Quiz</h1>
+            </div>
 
-function Welcome() {
-  const [formdetails, setFormDetails] = useState({ amount: 10, category: 'sports', difficulty: 'easy' });
-  const [questionState, setQuestionState] = useState(false);
-  const [view, setView] = useState($CONST.views.HOME);
-  const [questions, setQuestions] = useState([]);
+            <div className="mb-4 px-5">
+              <Form.Group controlId="amount">
+                <Form.Label className="fw-bold">No. of questions</Form.Label>
+                <Form.Control type="number" className="custom-form-control" value={formDetails.amount} onKeyDown={(event) => {
+                  if (event.key === 'ArrowUp')
+                    setFormDetails({ ...formDetails, [event.target.id]: formDetails.amount + 1 });
+                  else if (event.key === 'ArrowDown')
+                    setFormDetails({ ...formDetails, [event.target.id]: formDetails.amount - 1 });
+                }} />
+              </Form.Group>
+            </div>
 
-  const selectHandler = function (event) {
-    setFormDetails({ ...formdetails, [event.target.id]: event.target.value });
-  }
+            <div className="mb-4 px-5">
+              <Form.Group controlId="category">
+                <Form.Label className="fw-bold">Category</Form.Label>
+                <Form.Control as="select" className="custom-form-control" onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
+                  <option value="sports">sports</option>
+                  <option value="history">history</option>
+                  <option value="politics">politics</option>
+                </Form.Control>
+              </Form.Group>
+            </div>
 
-  return view === $CONST.views.HOME ? <>
-    <div className="container d-flex align-items-center justify-content-center flex-dir-col">
-      <form className="d-flex flex-dir-col justify-content-center" onSubmit={async (event) => {
-        event.preventDefault();
-        setQuestionState(true);
-        const questions = await load(formdetails);
-        setQuestionState(false);
+            <div className="mb-4 px-5">
+              <Form.Group controlId="difficulty">
+                <Form.Label className="fw-bold">Select difficulty</Form.Label>
+                <Form.Control as="select" className="custom-form-control" onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
+                  <option value="easy">easy</option>
+                  <option value="medium">medium</option>
+                  <option value="hard">hard</option>
+                </Form.Control>
+              </Form.Group>
+            </div>
 
-        if (questions?.length) {
-          setQuestions(questions);
-          setView($CONST.views.QUESTIONS);
-        }
-      }}>
-        <h1>Setup Quiz</h1>
-        <label htmlFor="amount">No. of questions</label>
-        <input type="number" id="amount" placeholder="Ex: 10" value={formdetails.amount} onKeyDown={(event) => {
-          const { key } = event;
-
-          if (key === 'ArrowUp') {
-            setFormDetails({ ...formdetails, [event.target.id]: ++formdetails.amount });
-          }
-          else if (key === 'ArrowDown') {
-            setFormDetails({ ...formdetails, [event.target.id]: --formdetails.amount });
-          }
-        }} />
-
-        <label htmlFor="category">Category</label>
-        <select id='category' onChange={selectHandler}>
-          <option value='sports'>Sports</option>
-          <option value='history'>History</option>
-          <option value='politics'>Politics</option>
-        </select>
-
-        <label htmlFor="difficulty">Difficulty</label>
-        <select id='difficulty' onChange={selectHandler}>
-          <option value='easy'>Easy</option>
-          <option value='medium'>Medium</option>
-          <option value='hard'>Hard</option>
-        </select>
-
-        <input type="submit" value={!questionState ? "Start" : 'Loading...'} disabled={questionState} />
-      </form>
-    </div>
-  </> : <Question question={questions[0].question} answer={questions[0].correct_answer} options={questions[0].incorrect_answers} details={questions} />
-}
+            <div className="mb-4 px-5 mx-auto my-auto">
+              <Button type="submit" className="btn custom-btn fw-bold" disabled={loading} onClick={async () => {
+                setLoading(true);
+                setQuestions(await load(formDetails));
+                setLoading(false);
+                setView('Question');
+              }}>
+                {!loading ? 'Start' : 'Loading...'}
+              </Button>
+            </div>
+          </Form>
+        </div>
+      </> :
+      <Question question={questions[0].question} answer={questions[0].correct_answer} details={questions} options={questions[0].incorrect_answers} viewHandler={setView} />
+  );
+};
 
 export default Welcome;

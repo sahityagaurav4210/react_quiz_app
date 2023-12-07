@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 * {
   margin: 0%;
   padding: 0%;
@@ -11,31 +12,115 @@ body {
   background-color: #F1F5F8;
 }
 
-:root {
-  --max-width: calc(100vw - 50px);
-}
-
 #root {
-  width: var(--max-width);
   height: 100%;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.d-flex {
-  display: flex;
+#quiz {
+  width: 45%;
+  height: 75%;
+  background-color: white;
 }
 
-.flex-dir-col {
+.h-primary {
+  letter-spacing: 1.5px;
+}
+
+.custom-btn {
+  width: 100%;
+  border: 1px solid #FFB100;
+  color: black;
+  background-color: #FFB100;
+}
+
+.custom-btn:hover,
+.custom-btn:focus {
+  color: black;
+  border: 1px solid #FFB100;
+  background-color: #FFB100;
+}
+
+.custom-btn:focus {
+  outline: 2px solid black;
+}
+
+.custom-form-control {
+  background-color: #F1F5F8;
+}
+
+.custom-form-control:hover,
+.custom-form-control:focus {
+  box-shadow: none;
+  outline: 2px solid black;
+  box-shadow: none;
+}
+
+.content {
+  height: 90%;
+  flex-direction: column;
+  background-color: white;
+}
+
+.content button {
+  color: black;
+  width: 20%;
+  border: 1px solid #FFB100;
+  background-color: #FFB100;
+}
+
+.content button:hover,
+.content button:focus {
+  color: black;
+  cursor: pointer;
+  border: 1px solid #FFB100;
+  background-color: #FFB100;
+}
+
+.answer {
+  width: 99%;
+  height: 10%;
+  color: green;
+}
+
+.question {
+  width: 99%;
+  height: 20%;
+}
+
+.question h2 {
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  font-weight: bolder;
+}
+
+.options {
+  width: 99%;
+  height: 60%;
   flex-direction: column;
 }
 
-.align-items-center {
-  align-items: center;
+.options .choices {
+  width: 60%;
+  height: 15%;
+  background-color: #8bcbf9;
+  border-radius: 5px;
 }
 
-.justify-content-center {
-  justify-content: center;
+.options .choices:hover,
+.options .choices:focus {
+  cursor: pointer;
+  background-color: #49A6E9;
+}
+
+.footer {
+  width: 99%;
+  height: 10%;
+}
+
+.footer button {
+  width: 35%;
+  background-color: #FFB100;
+  border: 1px solid #FFB100;
+  border-radius: 5px;
+  letter-spacing: 2px;
 }
