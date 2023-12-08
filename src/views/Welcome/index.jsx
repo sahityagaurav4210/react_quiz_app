@@ -16,46 +16,37 @@ const Welcome = () => {
         <div id="quiz">
           <Form onSubmit={(event) => {
             event.preventDefault();
-          }}>
-            <div className="mt-4 mb-4 px-5">
+          }} className='mt-5'>
+            <div className="px-5">
               <h1 className="fw-bold h-primary">Setup Quiz</h1>
             </div>
 
-            <div className="mb-4 px-5">
-              <Form.Group controlId="amount">
-                <Form.Label className="fw-bold">No. of questions</Form.Label>
-                <Form.Control type="number" className="custom-form-control" value={formDetails.amount} onKeyDown={(event) => {
-                  if (event.key === 'ArrowUp')
-                    setFormDetails({ ...formDetails, [event.target.id]: formDetails.amount + 1 });
-                  else if (event.key === 'ArrowDown')
-                    setFormDetails({ ...formDetails, [event.target.id]: formDetails.amount - 1 });
-                }} />
-              </Form.Group>
-            </div>
+            <Form.Group controlId="amount" className='px-5 form-items'>
+              <Form.Label className="form-label">Number of questions</Form.Label>
+              <Form.Control type="number" className="custom-form-control" value={formDetails.amount} onChange={(event) => {
+                setFormDetails({ ...formDetails, [event.target.id]: event.target.value })
+              }} />
+            </Form.Group>
 
-            <div className="mb-4 px-5">
-              <Form.Group controlId="category">
-                <Form.Label className="fw-bold">Category</Form.Label>
-                <Form.Control as="select" className="custom-form-control" onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
-                  <option value="sports">sports</option>
-                  <option value="history">history</option>
-                  <option value="politics">politics</option>
-                </Form.Control>
-              </Form.Group>
-            </div>
+            <Form.Group controlId="category" className='form-items px-5'>
+              <Form.Label className="form-label">Category</Form.Label>
+              <select as="select" className="custom-form-control custom-style" onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
+                <option value="sports">sports</option>
+                <option value="history">history</option>
+                <option value="politics">politics</option>
+              </select>
+            </Form.Group>
 
-            <div className="mb-4 px-5">
-              <Form.Group controlId="difficulty">
-                <Form.Label className="fw-bold">Select difficulty</Form.Label>
-                <Form.Control as="select" className="custom-form-control" onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
-                  <option value="easy">easy</option>
-                  <option value="medium">medium</option>
-                  <option value="hard">hard</option>
-                </Form.Control>
-              </Form.Group>
-            </div>
+            <Form.Group controlId="difficulty" className='form-items px-5'>
+              <Form.Label className="form-label">Select difficulty</Form.Label>
+              <select className="custom-form-control custom-style" onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
+                <option value="easy">easy</option>
+                <option value="medium">medium</option>
+                <option value="hard">hard</option>
+              </select>
+            </Form.Group>
 
-            <div className="mb-4 px-5 mx-auto my-auto">
+            <div className="form-items px-5 mx-auto">
               <Button type="submit" className="btn custom-btn fw-bold" disabled={loading} onClick={async () => {
                 setLoading(true);
                 setQuestions(await load(formDetails));

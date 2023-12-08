@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
 import { submit, next, calculateScore } from './index.js';
 
 const Question = function ({ question, answer, options, details, viewHandler }) {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [currentScore, setCurrentScore] = useState(0);
+    const [modalState, setModalState] = useState(false);
 
     let choices;
 
@@ -16,60 +18,58 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
     }
 
     return !currentQuestion ? <>
-        <div className="content container d-flex justify-content-center">
-            <div className="answer d-flex align-items-center justify-content-end mt-4">
-                <p>Correct answer : {currentScore}/{currentQuestion}</p>
-            </div>
+        <div className="content">
+            <p style={{ textTransform: 'capitalize', letterSpacing: '.1rem' }}>Correct answers : {currentScore}/{currentQuestion}</p>
 
-            <div className="question d-flex align-items-center justify-content-center text-center">
+            <article>
                 <h2 dangerouslySetInnerHTML={{ __html: question }}></h2>
-            </div>
+                <div className="btn-container">
+                    {
+                        choices.map((choice, index) => <button className="ans-btn" dangerouslySetInnerHTML={{ __html: choice }} key={index} onClick={(event) => {
+                            submit(event, setCurrentQuestion, setCurrentScore, currentQuestion, currentScore, details);
+                        }}>
+                        </button>)
+                    }
+                </div>
+            </article>
 
-            <div className="options d-flex align-items-center justify-content-center">
-                {
-                    choices.map((choice, index) => <div className="choices d-flex align-items-center justify-content-center mb-3 mt-2" dangerouslySetInnerHTML={{ __html: choice }} key={index} onClick={(event) => {
-                        submit(event, setCurrentQuestion, setCurrentScore, currentQuestion, currentScore, details);
-                    }}>
-                    </div>)
-                }
-            </div>
-
-            <div className="footer d-flex align-items-center justify-content-end px-4 mb-4">
-                <button type="submit" className="fw-bold mb-4 p-1" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
-            </div>
+            <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
         </div>
     </> : <>
         {currentQuestion < details.length ?
             <>
-                <div className="content container d-flex justify-content-center">
-                    <div className="answer d-flex align-items-center justify-content-end mt-4">
-                        <p>Correct answer : {currentScore}/{currentQuestion}</p>
-                    </div>
+                <div className="content">
+                    <p style={{ textTransform: 'capitalize', letterSpacing: '.1rem' }}>Correct answers : {currentScore}/{currentQuestion}</p>
 
-                    <div className="question d-flex align-items-center justify-content-center text-center">
+                    <article>
                         <h2 dangerouslySetInnerHTML={{ __html: details[currentQuestion].question }}></h2>
-                    </div>
+                        <div className="btn-container">
+                            {
+                                choices.map((choice, index) => <button className="ans-btn" dangerouslySetInnerHTML={{ __html: choice }} key={index} onClick={(event) => {
+                                    submit(event, setCurrentQuestion, setCurrentScore, currentQuestion, currentScore, details);
+                                }}>
+                                </button>)
+                            }
+                        </div>
+                    </article>
 
-                    <div className="options d-flex align-items-center justify-content-center">
-                        {
-                            choices.map(choice => <div className="choices d-flex align-items-center justify-content-center mb-3 mt-2" onClick={(event) => {
-                                submit(event, setCurrentQuestion, setCurrentScore, currentQuestion, currentScore, details);
-                            }} dangerouslySetInnerHTML={{ __html: choice }}>
-                            </div>)
-                        }
-                    </div>
-
-                    <div className="footer d-flex align-items-center justify-content-end px-4 mb-4">
-                        <button type="submit" className="fw-bold mb-4 p-1" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
-                    </div>
+                    <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
                 </div>
             </> :
             <>
-                <div className="content container d-flex justify-content-center align-items-center" style={{ height: '40%' }}>
-                    <h1 className='fw-bold'>Congrats!</h1>
-                    <h2>You've answered {calculateScore(currentScore, details.length)}% of the questions correctly</h2>
-                    <button type='button' className='btn mt-3 fw-bold' onClick={() => viewHandler('Welcome')}>Play Again</button>
-                </div>
+                <Modal show={!modalState} onHide={setModalState} centered={true} style={{ overflowY: 'hidden', margin: 'auto', width: '80%' }}>
+                    <Modal.Header style={{ border: 'none' }}>
+                        <Modal.Title>Congrats!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body style={{ textAlign: 'center' }}>
+                        <p>You've answered {calculateScore(currentScore, details.length)}% of the questions correctly</p>
+                    </Modal.Body>
+                    <Modal.Footer style={{ border: 'none' }}>
+                        <Button onClick={setModalState}>
+                            Play Again
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </>
         }
     </>
