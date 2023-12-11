@@ -1,37 +1,72 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-* {
-  margin: 0%;
-  padding: 0%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: var(--clr-grey-10);
+  color: var(--clr-grey-1);
+  line-height: 1.5;
+  font-size: 0.875rem;
 }
 
 :root {
   --max-width: 1170px;
+  --spacing: 0.1rem
 }
 
-#root {
-  min-height: 100vh;
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: var(--spacing);
+  text-transform: capitalize;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+p {
+  margin-bottom: 1.25rem;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
   background-color: #F1F5F8;
 }
 
-#quiz {
-  width: 38%;
-  height: 79%;
+.quiz {
+  width: 90vw;
+  max-width: var(--max-width);
   border-radius: 0.25rem;
   margin: 4rem auto;
+  padding: 3rem;
   background-color: white;
+}
+
+.quiz-sm {
+  max-width: 500px;
 }
 
 .h-primary {
   color: #102A42;
-  line-height: 1;
+  font-weight: 700;
   margin-bottom: 2rem;
-  letter-spacing: 0.1rem;
 }
+
 
 .form-items {
   margin-bottom: 2rem;
+  /* height: 58px; */
 }
 
 .form-label {
@@ -39,42 +74,57 @@
   color: #324d67;
   text-transform: capitalize;
   font-weight: 500;
+  font-size: 1rem;
 }
 
 .custom-btn {
+  border-radius: .25rem;
+  border-color: transparent;
+  padding: 4px 8px;
+  display: block;
   width: 100%;
-  border: 1px solid #FFB100;
-  color: black;
-  background-color: #FFB100;
+  margin-left: auto;
+  margin-top: 2rem;
+  font-weight: 700;
+  background: #ffb100;
+  color: #222;
+  letter-spacing: var(--spacing);
+  transition: all .3s linear;
+  cursor: pointer;
 }
 
-.custom-btn:hover,
-.custom-btn:focus {
-  color: black;
-  border: 1px solid #FFB100;
-  background-color: #FFB100;
+.select {
+  margin-bottom: 0;
 }
 
 .custom-btn:focus {
+  color: black;
+  box-shadow: none;
   outline: 2px solid black;
+  border: 1px solid #FFB100;
+  background-color: #FFB100;
+}
+
+.custom-btn:hover {
+  color: black;
+  border: 1px solid #FFB100;
+  background-color: #FFB100;
 }
 
 .custom-form-control {
-  font-size: 1rem;
   border: none;
-  height: auto;
-  background-color: #F1F5F8;
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.25rem;
+  background: #f1f5f8;
+  font-size: 1.02rem;
+  padding: 0.20rem .5rem;
+  width: 100%;
+  /* height: 27px; */
+  border-radius: .25rem;
 }
 
 .custom-style {
-  /* padding-left: 1rem; */
   width: 100%;
-  /* font-weight: 500; */
 }
 
-.custom-form-control:hover,
 .custom-form-control:focus {
   box-shadow: none;
   outline: 2px solid black;
@@ -148,35 +198,85 @@ article h2 {
   background-color: #805900;
 }
 
-.dialog{
+.dialog {
   width: 100vw;
   height: 100vh;
-  border: 1px solid black; 
+  border: 1px solid black;
 }
 
-.modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.modal-container {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: #3C3D3E;
   flex-direction: column;
-  width: 80%;
-  height: 40%;
+  transition: all 0.3s linear;
 }
 
-.modal h2{
-  margin: auto;
+.modal-content {
+  background: #fff;
+  width: 90vw;
+  max-width: 620px;
+  padding: 3rem;
+  border-radius: .25rem;
+  text-align: center;
+  position: relative;
+  /* z-index: -1; */
+  /* opacity: 0.75; */
 }
 
-.play-btn{
+.modal-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.1rem;
+}
+
+.modal-content p {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.modal-container h2,
+.modal-container p {
+  color: #102A42;
+}
+
+.play-btn {
   border-radius: .25rem;
   border-color: transparent;
   padding: .25rem .5rem;
+  display: block;
   width: 35%;
-  letter-spacing: .1rem;
-  margin: auto;
+  margin-left: auto;
+  /* margin-top: 2rem; */
+  margin-right: auto;
   font-weight: 700;
   background: #ffb100;
   color: #222;
   transition: all .3s linear;
   cursor: pointer;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 28% auto 0% auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

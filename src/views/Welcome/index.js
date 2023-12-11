@@ -1,5 +1,6 @@
 import { envs, Constants } from '../../config/index';
 
+const $CONST = new Constants();
 /**
  * 
  * @param {object} formdetails 
@@ -9,7 +10,6 @@ import { envs, Constants } from '../../config/index';
 const load = async function (formdetails) {
     let url;
     const $ENV = envs();
-    const $CONST = new Constants();
 
     switch (formdetails.category) {
         case $CONST.categories.SPORTS:
@@ -30,8 +30,27 @@ const load = async function (formdetails) {
     }
 
     const raw = await fetch(url);
-    const { results } = await raw.json();
-    return results;
+    if (raw.status === 200) {
+        const { results } = await raw.json();
+        return results;
+    }
+    else
+        return null;
 }
 
-export { load };
+function payloadChecker(payload = {}) {
+    let flag = false;
+
+    for (let item in payload) {
+        if (item === 'amount' && !isNaN(parseInt(payload[item])) && (parseInt(payload[item]) < 0 || parseInt(payload[item]) > 50)) {
+            flag = true;
+        }
+        if (item !== 'amount' && (!Object.values($CONST.categories).includes(payload[item]) && !Object.values($CONST.difficulty).includes(payload[item]))) {
+            flag = true;
+        }
+    }
+
+    return !flag;
+}
+
+export { load, payloadChecker };

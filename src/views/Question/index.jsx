@@ -16,9 +16,12 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
     else if (currentQuestion < details.length) {
         choices = [details[currentQuestion]?.correct_answer, ...details[currentQuestion]?.incorrect_answers];
     }
+    else {
+        choices = [details[currentQuestion - 1]?.correct_answer, ...details[currentQuestion - 1]?.incorrect_answers];
+    }
 
     return !currentQuestion ? <>
-        <div className="content">
+        <div className="content" style={{ zIndex: 1 }}>
             <p style={{ textTransform: 'capitalize', letterSpacing: '.1rem' }}>Correct answers : {currentScore}/{currentQuestion}</p>
 
             <article>
@@ -57,19 +60,31 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
                 </div>
             </> :
             <>
-                <Modal show={!modalState} onHide={setModalState} centered={true} style={{ overflowY: 'hidden', margin: 'auto', width: '80%' }}>
-                    <Modal.Header style={{ border: 'none' }}>
-                        <Modal.Title>Congrats!</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body style={{ textAlign: 'center' }}>
-                        <p>You've answered {calculateScore(currentScore, details.length)}% of the questions correctly</p>
-                    </Modal.Body>
-                    <Modal.Footer style={{ border: 'none' }}>
-                        <Button onClick={setModalState}>
-                            Play Again
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                <div className="content">
+                    <p style={{ textTransform: 'capitalize', letterSpacing: '.1rem' }}>Correct answers : {currentScore}/{currentQuestion}</p>
+
+                    <article>
+                        <h2 dangerouslySetInnerHTML={{ __html: details[currentQuestion - 1].question }}></h2>
+                        <div className="btn-container">
+                            {
+                                choices.map((choice, index) => <button className="ans-btn" dangerouslySetInnerHTML={{ __html: choice }} key={index} onClick={(event) => {
+                                    submit(event, setCurrentQuestion, setCurrentScore, (currentQuestion - 1), currentScore, details);
+                                }}>
+                                </button>)
+                            }
+                        </div>
+                    </article>
+
+                    <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
+                </div>
+
+                <div className="modal-container d-flex align-items-center justify-content-center">
+                    <div className="modal-content">
+                        <h2>Congrats!</h2>
+                        <p>You've answered {calculateScore(currentScore, details.length)}% of questions correctly.</p>
+                        <button type='button' className='play-btn' onClick={() => viewHandler('Welcome')}>Play Again</button>
+                    </div>
+                </div>
             </>
         }
     </>

@@ -20,6 +20,12 @@ function Constants() {
         SPORTS: 'sports',
         HISTORY: 'history',
         POLITICS: 'politics'
+    });
+
+    this.difficulty = Object.freeze({
+        EASY: 'easy',
+        MEDIUM: 'medium',
+        HARD: 'hard'
     })
 }
 export { envs, Constants };
