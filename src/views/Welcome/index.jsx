@@ -5,7 +5,7 @@ import { load, payloadChecker } from './index.js';
 import Question from '../Question/index.jsx';
 import Loader from '../Loader/index.jsx';
 
-const Welcome = () => {
+const Welcome = ({ setState }) => {
   const [formDetails, setFormDetails] = useState({ amount: 10, category: 'sports', difficulty: 'easy' });
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState();
@@ -30,7 +30,7 @@ const Welcome = () => {
 
             <Form.Group controlId="category" className='form-items'>
               <Form.Label className="form-label">Category</Form.Label>
-              <select as="select" className="custom-form-control custom-style" id='category' onChange={(event) => {
+              <select as="select" className="custom-form-control" id='category' onChange={(event) => {
                 setFormDetails({ ...formDetails, [event.target.id]: event.target.value })
               }}>
                 <option value="sports">sports</option>
@@ -39,9 +39,9 @@ const Welcome = () => {
               </select>
             </Form.Group>
 
-            <Form.Group controlId="difficulty" className='form-items select'>
+            <Form.Group controlId="difficulty" className='form-items'>
               <Form.Label className="form-label">Select difficulty</Form.Label>
-              <select className="custom-form-control custom-style" id='difficulty' onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
+              <select className="custom-form-control" id='difficulty' onChange={(event) => { setFormDetails({ ...formDetails, [event.target.id]: event.target.value }) }}>
                 <option value="easy">easy</option>
                 <option value="medium">medium</option>
                 <option value="hard">hard</option>
@@ -50,13 +50,14 @@ const Welcome = () => {
 
             {isInvPayload && <p style={{ color: '#C92525', marginBottom: '2.25rem' }}>Can't Generate Questions, Please Try Different Options</p>}
 
-            <Button type="submit" className="custom-btn" disabled={loading} onClick={async () => {
+            <button type="submit" className="d-flex align-items-center justify-content-center custom-btn" disabled={loading} onClick={async () => {
               if (payloadChecker(formDetails)) {
                 isInvPayload && setPayloadState(false);
                 setView('Loading');
                 const results = await load(formDetails);
                 if (results) {
                   setQuestions(results);
+                  setState(true);
                   setView('Question');
                 }
                 else {
@@ -68,7 +69,7 @@ const Welcome = () => {
               }
             }}>
               Start
-            </Button>
+            </button>
           </Form>
         </section>
       </> :
