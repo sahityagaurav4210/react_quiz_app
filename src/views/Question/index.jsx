@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
 
 import { submit, next, calculateScore } from './index.js';
+import $TXT from '../../i18n/index.js';
 
 const Question = function ({ question, answer, options, details, viewHandler }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -37,7 +37,7 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
           </div>
         </article>
 
-        <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
+        <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>{$TXT.EN.FORM.BUTTONS.NEXT}</button>
       </div>
     </> :
     <>
@@ -58,7 +58,7 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
               </div>
             </article>
 
-            <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
+            <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>{$TXT.EN.FORM.BUTTONS.NEXT}</button>
           </div>
         </> :
         <>
@@ -77,14 +77,14 @@ const Question = function ({ question, answer, options, details, viewHandler }) 
               </div>
             </article>
 
-            <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>Next Question</button>
+            <button type="submit" className="next-btn" onClick={() => next(currentQuestion, setCurrentQuestion)}>{$TXT.EN.FORM.BUTTONS.NEXT}</button>
           </div>
 
           <div className="modal-container d-flex align-items-center justify-content-center">
             <div className="modal-content">
-              <h2>Congrats!</h2>
-              <p>You answered {calculateScore(currentScore, details.length)}% of questions correctly</p>
-              <button type='button' className='next-btn play-btn' onClick={() => viewHandler('Welcome')}>Play Again</button>
+              <h2>{$TXT.EN.HEADING.CONGRATS}</h2>
+              <p>{$TXT.EN.HEADING.RESLUTS.replace('%age', `${calculateScore(currentScore, details.length)}%`)}</p>
+              <button type='button' className='next-btn play-btn' onClick={() => viewHandler('Welcome')}>{$TXT.EN.FORM.BUTTONS.PLAY}</button>
             </div>
           </div>
         </>

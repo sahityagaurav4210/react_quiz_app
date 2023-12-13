@@ -292,3 +292,73 @@ article h2 {
     transform: rotate(360deg);
   }
 }
+
+@media only screen and (min-width: 576px) {
+  article h2 {
+    font-size: 2rem;
+  }
+
+  .next-btn {
+    width: 177.02px;
+    margin-left: auto;
+    height: 30.67px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  article h2 {
+    font-size: 2.5rem;
+  }
+
+  .next-btn {
+    width: 35%;
+    height: 30px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  article h2 {
+    font-size: 2.5rem;
+  }
+
+  .next-btn {
+    width: 35%;
+    height: 30px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  main {
+    align-items: center;
+  }
+
+  content {
+    max-width: 95%;
+  }
+
+  article h2 {
+    font-size: 2.5rem;
+  }
+
+  .play-btn {
+    margin-top: 1rem;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  main {
+    align-items: center;
+  }
+
+  content {
+    max-width: 95%;
+  }
+
+  article h2 {
+    font-size: 2.5rem;
+  }
+
+  .play-btn {
+    margin-top: 1rem;
+  }
+}
