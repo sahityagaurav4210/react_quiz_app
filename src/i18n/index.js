@@ -27,7 +27,7 @@ const $TXT = Object.freeze({
         })
       }),
       BUTTONS: Object.freeze({
-        START: 'START',
+        START: 'Start',
         NEXT: 'Next Question',
         PLAY: 'Play Again'
       })

@@ -13,7 +13,8 @@ function envs() {
 function Constants() {
     this.views = Object.freeze({
         HOME: 'Welcome',
-        QUESTIONS: 'Questions'
+        QUESTIONS: 'Questions',
+        LOADING: 'Loading'
     });
 
     this.categories = Object.freeze({

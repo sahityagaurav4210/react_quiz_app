@@ -3,6 +3,7 @@ import Welcome from './views/Welcome/index.jsx';
 
 function App() {
   const [state, setState] = useState(false);
+  // alert(window.innerWidth)
   return <>
     {
       !state ? <main className="d-flex align-items-center justify-content-center">

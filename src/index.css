@@ -237,6 +237,16 @@ article h2 {
   /* z-index: -1; */
 }
 
+.quiz-sp {
+  margin: 0;
+  position: relative;
+  top: 25px;
+  left: auto;
+  right: auto;
+  justify-content: left;
+  /* align-items: flex-start; */
+}
+
 .modal-content {
   background: #fff;
   width: 90vw;
@@ -279,7 +289,7 @@ article h2 {
   border-radius: 50%;
   width: 100px;
   height: 100px;
-  margin: 28% auto 0% auto;
+  margin: 12% auto 0% auto;
   animation: spin 1s linear infinite;
 }
 
@@ -328,9 +338,6 @@ article h2 {
 }
 
 @media only screen and (min-width: 1200px) {
-  main {
-    align-items: center;
-  }
 
   content {
     max-width: 95%;

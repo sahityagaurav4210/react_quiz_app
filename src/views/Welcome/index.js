@@ -17,11 +17,11 @@ const load = async function (formdetails) {
             break;
 
         case $CONST.categories.HISTORY:
-            url = `${$ENV.VITE_API_URL}?amount=${formdetails.amount}&category=22&difficulty=${formdetails.difficulty}&type=multiple`;
+            url = `${$ENV.VITE_API_URL}?amount=${formdetails.amount}&category=23&difficulty=${formdetails.difficulty}&type=multiple`;
             break;
 
         case $CONST.categories.POLITICS:
-            url = `${$ENV.VITE_API_URL}?amount=${formdetails.amount}&category=23&difficulty=${formdetails.difficulty}&type=multiple`;
+            url = `${$ENV.VITE_API_URL}?amount=${formdetails.amount}&category=24&difficulty=${formdetails.difficulty}&type=multiple`;
             break;
 
         default:
@@ -30,8 +30,8 @@ const load = async function (formdetails) {
     }
 
     const raw = await fetch(url);
-    if (raw.status === 200) {
-        const { results } = await raw.json();
+    const { results } = await raw.json();
+    if (raw.status === 200 && Array.isArray(results) && results.length) {
         return results;
     }
     else
@@ -42,7 +42,7 @@ function payloadChecker(payload = {}) {
     let flag = false;
 
     for (let item in payload) {
-        if (item === 'amount' && !isNaN(parseInt(payload[item])) && (parseInt(payload[item]) < 0 || parseInt(payload[item]) > 50)) {
+        if (item === 'amount' && (isNaN(parseInt(payload[item])) || (parseInt(payload[item]) < 0 || parseInt(payload[item]) > 50)) || !payload[item]) {
             flag = true;
         }
         if (item !== 'amount' && (!Object.values($CONST.categories).includes(payload[item]) && !Object.values($CONST.difficulty).includes(payload[item]))) {
